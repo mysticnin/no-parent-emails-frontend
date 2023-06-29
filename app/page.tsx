@@ -1,113 +1,153 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
+import Link from 'next/link'
+import LogoutButton from './logout-button'
 
-export default function Home() {
+const resources = [
+  {
+    title: 'Cookie-based Auth and the Next.js App Router',
+    subtitle:
+      'This free course by Jon Meyers, shows you how to configure Supabase Auth to use cookies, and steps through some common patterns.',
+    url: 'https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF',
+    icon: 'youtube',
+  },
+  {
+    title: 'Supabase Next.js App Router Example',
+    subtitle:
+      'Want to see a code example containing some common patterns with Next.js and Supabase? Check out this repo!',
+    url: 'https://github.com/supabase/supabase/tree/master/examples/auth/nextjs',
+    icon: 'code',
+  },
+  {
+    title: 'Supabase Auth Helpers Docs',
+    subtitle:
+      'This template has configured Supabase Auth to use cookies for you, but the docs are a great place to learn more.',
+    url: 'https://supabase.com/docs/guides/auth/auth-helpers/nextjs',
+    icon: 'book',
+  },
+]
+
+const examples = [
+  { type: 'Client Components', src: 'app/_examples/client-component/page.tsx' },
+  { type: 'Server Components', src: 'app/_examples/server-component/page.tsx' },
+  { type: 'Server Actions', src: 'app/_examples/server-action/page.tsx' },
+  { type: 'Route Handlers', src: 'app/_examples/route-handler.ts' },
+  { type: 'Middleware', src: 'app/middleware.ts' },
+  { type: 'Protected Routes', src: 'app/_examples/protected/page.tsx' },
+]
+
+export default async function Index() {
+  const supabase = createServerComponentClient({ cookies })
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div className="flex flex-col flex-1 max-w-3xl mt-24">
+      <h1 className="flex justify-between mb-2 text-2xl">
+        <span className="sr-only">Supabase and Next.js Starter Template</span>
+      </h1>
+
+      <div className="flex py-3 text-sm border-b text-neutral-100">
+        <span className="ml-auto">
+          {user ? (
+            <span className="flex gap-4">
+              Hey, {user.email}! <span className="border-r"></span>{' '}
+              <LogoutButton />
+            </span>
+          ) : (
+            <div>
+              <Link href="/login" className="text-neutral-100 hover:underline">
+                Login
+              </Link>
+            </div>
+          )}
+        </span>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
+      <div className="flex justify-center gap-8 mt-12">
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+          src="/supabase.svg"
+          alt="Supabase Logo"
+          width={225}
+          height={45}
+          priority
+        />
+        <div className="h-10 rotate-45 border-l"></div>
+        <Image
           src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
+          alt="Vercel Logo"
+          width={150}
+          height={36}
           priority
         />
       </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      <p className="max-w-2xl mx-auto mt-8 text-3xl text-center text-white">
+        The fastest way to get started building apps with{' '}
+        <strong>Supabase</strong> and <strong>Next.js</strong>
+      </p>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="flex justify-center mt-16">
+        <span className="px-6 py-3 font-mono text-sm rounded-lg bg-neutral-100 text-neutral-900">
+          Get started by editing <strong>app/page.tsx</strong>
+        </span>
       </div>
-    </main>
+
+      <p className="text-lg font-bold text-center text-neutral-100 mt-28">
+        Everything you need to started
+      </p>
+
+      <div className="flex gap-12 mt-10 mb-16 -mx-12 h-60">
+        {resources.map(({ title, subtitle, url, icon }) => (
+          <a
+            key={title}
+            className="grid gap-4 py-6 pr-2 border-t-2 border-neutral-200 group text-neutral-100"
+            href={url}
+          >
+            <h2 className="font-bold mb-2 group-hover:underline min-h-[42px]">
+              {title}
+            </h2>
+            <p className="text-sm text-neutral-100">{subtitle}</p>
+            <div className="mt-2">
+              <Image
+                src={`/${icon}.svg`}
+                alt="Vercel Logo"
+                width={20}
+                height={25}
+                priority
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div className="grid justify-center max-w-lg gap-3 mx-auto mt-16 text-center">
+        <p className="text-lg font-bold text-center text-neutral-100">
+          Examples
+        </p>
+        <p className="mb-2 text-white">
+          Look in the <code>_examples</code> folder to see how to create a
+          Supabase client in all the different contexts
+        </p>
+      </div>
+
+      <div className="grid justify-center mt-8 mb-24 text-white border-t ">
+        {examples.map(({ type, src }) => (
+          <div className="" key={type}>
+            <div className="grid grid-cols-2 gap-4 border-b">
+              <span className="py-4 pr-4 font-bold text-right border-r">
+                {type}{' '}
+              </span>
+              <span className="py-4">
+                <code className="text-sm">{src}</code>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
