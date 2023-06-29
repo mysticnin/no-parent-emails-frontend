@@ -34,7 +34,7 @@ export default async function ProtectedRoute() {
         <span className="sr-only">Supabase and Next.js Starter Template</span>
       </h1>
 
-      <div className="flex border-b py-3 text-sm text-neutral-100">
+      <div className="flex border-b py-3 text-sm text-primary">
         <div className="flex items-center justify-between w-full">
           <code className="bg-neutral-700 px-3 py-1 rounded-lg text-sm">
             Protected page
@@ -42,7 +42,7 @@ export default async function ProtectedRoute() {
           <span className="flex gap-4">
             Hey, {user.email}! <span className="border-r"></span>{' '}
             <form action={signOut}>
-              <button className="text-neutral-100">Logout</button>
+              <button className="text-primary">Logout</button>
             </form>
           </span>
         </div>

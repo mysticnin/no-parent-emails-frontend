@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import GoogleLoginButton from '../google-login-button'
+import GoogleLoginButton from '@/components/google-login-button'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -49,7 +49,7 @@ export default function Login() {
             Email
           </label>
           <input
-            className="px-4 py-2 mb-6 border rounded-md bg-inherit text-neutral-100"
+            className="px-4 py-2 mb-6 border rounded-md bg-inherit text-primary"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -59,7 +59,7 @@ export default function Login() {
             Password
           </label>
           <input
-            className="px-4 py-2 mb-6 border rounded-md bg-inherit text-neutral-100"
+            className="px-4 py-2 mb-6 border rounded-md bg-inherit text-primary"
             type="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}

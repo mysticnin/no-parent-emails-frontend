@@ -2,7 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
-import LogoutButton from './logout-button'
+import LogoutButton from '@/components/logout-button'
 
 const resources = [
   {
@@ -45,12 +45,12 @@ export default async function Index() {
   } = await supabase.auth.getUser()
 
   return (
-    <div className="flex flex-col flex-1 max-w-3xl mt-24">
+    <div className="flex flex-col flex-1 max-w-3xl">
       <h1 className="flex justify-between mb-2 text-2xl">
         <span className="sr-only">Supabase and Next.js Starter Template</span>
       </h1>
 
-      <div className="flex py-3 text-sm border-b text-neutral-100">
+      <div className="flex py-3 text-sm border-b border-neutral-500 text-primary">
         <span className="ml-auto">
           {user ? (
             <span className="flex gap-4">
@@ -59,7 +59,7 @@ export default async function Index() {
             </span>
           ) : (
             <div>
-              <Link href="/login" className="text-neutral-100 hover:underline">
+              <Link href="/login" className="text-primary hover:underline">
                 Login
               </Link>
             </div>
@@ -75,7 +75,7 @@ export default async function Index() {
           height={45}
           priority
         />
-        <div className="h-10 rotate-45 border-l"></div>
+        <div className="h-10 rotate-45 border-l border-black"></div>
         <Image
           src="/next.svg"
           alt="Vercel Logo"
@@ -85,18 +85,18 @@ export default async function Index() {
         />
       </div>
 
-      <p className="max-w-2xl mx-auto mt-8 text-3xl text-center text-white">
+      <p className="max-w-2xl mx-auto mt-8 text-3xl text-center text-secondary">
         The fastest way to get started building apps with{' '}
         <strong>Supabase</strong> and <strong>Next.js</strong>
       </p>
 
       <div className="flex justify-center mt-16">
-        <span className="px-6 py-3 font-mono text-sm rounded-lg bg-neutral-100 text-neutral-900">
+        <span className="px-6 py-3 font-mono text-sm rounded-lg bg-neutral-100 text-secondary">
           Get started by editing <strong>app/page.tsx</strong>
         </span>
       </div>
 
-      <p className="text-lg font-bold text-center text-neutral-100 mt-28">
+      <p className="text-lg font-bold text-center text-primary mt-28">
         Everything you need to started
       </p>
 
@@ -104,13 +104,13 @@ export default async function Index() {
         {resources.map(({ title, subtitle, url, icon }) => (
           <a
             key={title}
-            className="grid gap-4 py-6 pr-2 border-t-2 border-neutral-200 group text-neutral-100"
+            className="grid gap-4 py-6 pr-2 border-t-2 border-secondary group text-primary"
             href={url}
           >
             <h2 className="font-bold mb-2 group-hover:underline min-h-[42px]">
               {title}
             </h2>
-            <p className="text-sm text-neutral-100">{subtitle}</p>
+            <p className="text-sm text-primary">{subtitle}</p>
             <div className="mt-2">
               <Image
                 src={`/${icon}.svg`}
@@ -125,20 +125,20 @@ export default async function Index() {
       </div>
 
       <div className="grid justify-center max-w-lg gap-3 mx-auto mt-16 text-center">
-        <p className="text-lg font-bold text-center text-neutral-100">
+        <p className="text-lg font-bold text-center text-primary">
           Examples
         </p>
-        <p className="mb-2 text-white">
+        <p className="mb-2 text-primary">
           Look in the <code>_examples</code> folder to see how to create a
           Supabase client in all the different contexts
         </p>
       </div>
 
-      <div className="grid justify-center mt-8 mb-24 text-white border-t ">
+      <div className="grid justify-center mt-8 mb-24 border-t text-primary border-neutral-500">
         {examples.map(({ type, src }) => (
           <div className="" key={type}>
-            <div className="grid grid-cols-2 gap-4 border-b">
-              <span className="py-4 pr-4 font-bold text-right border-r">
+            <div className="grid grid-cols-2 gap-4 border-b border-neutral-500">
+              <span className="py-4 pr-4 font-bold text-right border-r border-neutral-500">
                 {type}{' '}
               </span>
               <span className="py-4">
